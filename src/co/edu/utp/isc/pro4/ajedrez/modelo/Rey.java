@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
 import java.awt.GradientPaint;
@@ -10,10 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-/**
- *
- * @author utp
- */
+
 public class Rey extends Ficha {
 
     public Rey(Color color) {
@@ -47,20 +40,17 @@ public class Rey extends Ficha {
         polyline.lineTo(x + 23, y + 6);
         polyline.lineTo(x + 18, y + 6);
        
-        
-        
         g.setPaint(new GradientPaint(x, y,
                 getColor() == Color.BLANCO ? java.awt.Color.CYAN : java.awt.Color.BLACK,    //color de la ficha
                 x + 50, y + 50,
                 java.awt.Color.WHITE));
         g.fill(polyline);
-        g.draw(polyline);
         g.fill(new Rectangle2D.Float(x + 15, y + 15, 20, 25));
         g.fill(new Rectangle2D.Float(x + 10, y + 40, 30, 5));
+        
         g.setPaint(java.awt.Color.BLACK);
+        g.draw(polyline);
         g.draw(new Rectangle2D.Float(x + 15, y + 15, 20, 25));
         g.draw(new Rectangle2D.Float(x + 10, y + 40, 30, 5));
-       
     }
-
 }
