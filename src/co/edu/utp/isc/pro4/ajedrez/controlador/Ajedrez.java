@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.controlador;
 
 import co.edu.utp.isc.pro4.ajedrez.modelo.Alfil;
@@ -19,10 +15,7 @@ import co.edu.utp.isc.pro4.ajedrez.modelo.Tablero;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Torre;
 import co.edu.utp.isc.pro4.ajedrez.ui.PnlTablero;
 
-/**
- *
- * @author utp: odau
- */
+
 public class Ajedrez {
 
     /*Temporal*/
@@ -47,6 +40,10 @@ public class Ajedrez {
         this();
         this.jugadores[0] = jugador1;
         this.jugadores[1] = jugador2;
+    }
+
+    public PnlTablero getPnlTablero() {
+        return pnlTablero;
     }
 
     public void setPnlTablero(PnlTablero pnlTablero) {
@@ -140,7 +137,7 @@ public class Ajedrez {
         f.setCasilla(c);
         c.setFicha(f);
     }
-
+    
     private void mostrarTablero() {
         pnlTablero.updateUI();
 //        System.out.println("  \tA \tB \tC \tD \tE \tF \tG \tH");
@@ -152,5 +149,4 @@ public class Ajedrez {
 //            System.out.println();
 //        }
     }
-
 }
