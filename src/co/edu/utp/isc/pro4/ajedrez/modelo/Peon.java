@@ -14,8 +14,12 @@ public class Peon extends Ficha {
     }
 
     @Override
-    public void mover() {
-        //TODO: Mover como peon
+    public void mover(Casilla casillaInicio, Casilla casillaFin) {
+        //TODO: validar el mov del peon
+        this.setCasilla(null);
+        this.setCasilla(casillaFin);
+        casillaFin.setFicha(this);
+        casillaInicio.setFicha(null);
     }
 
     @Override
