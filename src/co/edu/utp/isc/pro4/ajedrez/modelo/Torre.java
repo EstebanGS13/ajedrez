@@ -13,8 +13,13 @@ public class Torre extends Ficha {
     }
 
     @Override
-    public void mover() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void mover(Casilla casillaInicio, Casilla casillaFin) {
+        //TODO: validar el mov de la torre
+        this.setCasilla(null);
+        this.setCasilla(casillaFin);
+        casillaFin.setFicha(this);
+        casillaInicio.setFicha(null);
+        
     }
 
     @Override
@@ -52,5 +57,4 @@ public class Torre extends Ficha {
         g.setColor(java.awt.Color.BLACK);
         g.draw(polyline);
     }
-
 }
