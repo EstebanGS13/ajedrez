@@ -14,7 +14,7 @@ public class Rey extends Ficha {
     }
 
     @Override
-    public void mover() {
+    public void mover(Casilla casillaInicio, Casilla casillaFin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

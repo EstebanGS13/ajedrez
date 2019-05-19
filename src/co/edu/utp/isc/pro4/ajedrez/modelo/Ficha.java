@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
 import co.edu.utp.isc.pro4.ajedrez.controlador.Dibujable;
 
-/**
- *
- * @author utp
- */
+
 public abstract class Ficha extends Dibujable {
 
     private Casilla casilla;
@@ -20,7 +13,7 @@ public abstract class Ficha extends Dibujable {
         this.color = color;
     }
 
-    public abstract void mover();
+    public abstract void mover(Casilla casillaInicio, Casilla casillaFin);
 
     public abstract void comer();
 
@@ -54,5 +47,4 @@ public abstract class Ficha extends Dibujable {
         }
         return tipo + (getColor() == Color.BLANCO ? "B" : "N");
     }
-
 }
