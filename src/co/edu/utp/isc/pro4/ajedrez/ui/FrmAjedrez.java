@@ -1,21 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.ui;
 
 import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
+import co.edu.utp.isc.pro4.ajedrez.controlador.Posicion;
+import co.edu.utp.isc.pro4.ajedrez.modelo.Casilla;
+import co.edu.utp.isc.pro4.ajedrez.modelo.Ficha;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Jugador;
+import co.edu.utp.isc.pro4.ajedrez.modelo.Tablero;
 
-/**
- *
- * @author utp
- */
+
 public class FrmAjedrez extends javax.swing.JFrame {
 
     private Ajedrez juego;
     private boolean jugadaInicial = true;
+    private Posicion posClicks;
+    private boolean posicionesTomadas = false;
+    private Ficha fichaTomada;
 
     /**
      * Creates new form FrmAjedrez
@@ -23,6 +23,8 @@ public class FrmAjedrez extends javax.swing.JFrame {
     public FrmAjedrez() {
         initComponents();
         setLocationRelativeTo(null);
+        posClicks = new Posicion();
+        fichaTomada = null;
     }
 
     /**
@@ -277,6 +279,7 @@ public class FrmAjedrez extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
         btnJugar.setEnabled(false);
         juego = new Ajedrez(
@@ -286,23 +289,58 @@ public class FrmAjedrez extends javax.swing.JFrame {
         juego.jugar();
     }//GEN-LAST:event_btnJugarActionPerformed
 
+    
     private void pnlTableroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTableroMouseReleased
-        // TODO add your handling code here:
+
         if (juego != null) {
-//            System.out.print(evt.getX() + ", " + evt.getY() + " = ");
             int col = 1 + evt.getX() / 50;
             int row = 1 + evt.getY() / 50;
-//            System.out.print(col + ", " + row + " = ");
-            System.out.println((char) ('A' + col - 1) + Integer.toString(row));
-            if (jugadaInicial) {
+            String posicion = (char) ('A' + col - 1) + Integer.toString(row);
+//            System.out.println(posicion);
+
+            PnlTablero panelTablero = juego.getPnlTablero();
+            Tablero tablero = panelTablero.getTablero();
+            Casilla casillaTomada = tablero.getCasilla(posicion);
+            fichaTomada = casillaTomada.getFicha();
+            
+            
+            if (posClicks.getPosicionInicio().isEmpty()
+                    && fichaTomada != null) {
+                posClicks.setPosicionInicio(posicion);
                 txtInicio.setText((char) ('A' + col - 1) + Integer.toString(row));
-                jugadaInicial = false;
-            } else {
+            }
+            else  {
+                posClicks.setPosicionFin(posicion);
                 txtFin.setText((char) ('A' + col - 1) + Integer.toString(row));
-                jugadaInicial = true;
+                posicionesTomadas = true;
+            }
+            
+            if (posicionesTomadas) {
+                System.out.println("tome la ficha: ");
+                System.out.println(posClicks.getPosicionInicio());
+                System.out.println(posClicks.getPosicionFin());
+                
+                String posInicial = posClicks.getPosicionInicio();
+                String posFinal = posClicks.getPosicionFin();
+                
+                casillaTomada = tablero.getCasilla(posInicial);
+                fichaTomada = casillaTomada.getFicha();
+                
+                Casilla casillaFinal = tablero.getCasilla(posFinal);
+                
+                fichaTomada.mover(casillaTomada, casillaFinal);
+                
+                
+                //TODO: ponerlas posiciones en vacio otra vez luego de mover ficha
+                posClicks.setPosicionInicio("");
+                posClicks.setPosicionFin("");
+                posicionesTomadas = false;
+                fichaTomada = null;
+                panelTablero.updateUI();
             }
         }
     }//GEN-LAST:event_pnlTableroMouseReleased
+    
 
     private void pnlTableroMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTableroMouseMoved
         // TODO add your handling code here:
@@ -313,9 +351,8 @@ public class FrmAjedrez extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlTableroMouseMoved
 
-    /**
-     * @param args the command line arguments
-     */
+    
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
