@@ -4,6 +4,7 @@ package co.edu.utp.isc.pro4.ajedrez.ui;
 import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
 import co.edu.utp.isc.pro4.ajedrez.controlador.Posicion;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Casilla;
+import co.edu.utp.isc.pro4.ajedrez.modelo.Color;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Ficha;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Jugador;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Tablero;
@@ -13,9 +14,7 @@ public class FrmAjedrez extends javax.swing.JFrame {
 
     private Ajedrez juego;
     private boolean jugadaInicial = true;
-    private Posicion posClicks;
-    private boolean posicionesTomadas = false;
-    private Ficha fichaTomada;
+    private final Posicion posClicks;
 
     /**
      * Creates new form FrmAjedrez
@@ -24,7 +23,6 @@ public class FrmAjedrez extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         posClicks = new Posicion();
-        fichaTomada = null;
     }
 
     /**
@@ -283,62 +281,38 @@ public class FrmAjedrez extends javax.swing.JFrame {
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
         btnJugar.setEnabled(false);
         juego = new Ajedrez(
-                new Jugador(txtBlancas.getText().trim()),
-                new Jugador(txtNegras.getText().trim()));
+                new Jugador(txtBlancas.getText().trim(), Color.BLANCO),
+                new Jugador(txtNegras.getText().trim(), Color.NEGRO));
         juego.setPnlTablero((PnlTablero) pnlTablero);
         juego.jugar();
     }//GEN-LAST:event_btnJugarActionPerformed
 
     
     private void pnlTableroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTableroMouseReleased
-
         if (juego != null) {
             int col = 1 + evt.getX() / 50;
             int row = 1 + evt.getY() / 50;
             String posicion = (char) ('A' + col - 1) + Integer.toString(row);
-//            System.out.println(posicion);
-
-            PnlTablero panelTablero = juego.getPnlTablero();
-            Tablero tablero = panelTablero.getTablero();
-            Casilla casillaTomada = tablero.getCasilla(posicion);
-            fichaTomada = casillaTomada.getFicha();
             
-            
-            if (posClicks.getPosicionInicio().isEmpty()
-                    && fichaTomada != null) {
+            if (jugadaInicial) {
                 posClicks.setPosicionInicio(posicion);
                 txtInicio.setText((char) ('A' + col - 1) + Integer.toString(row));
-            }
-            else  {
+                jugadaInicial = false;
+            } else {
                 posClicks.setPosicionFin(posicion);
                 txtFin.setText((char) ('A' + col - 1) + Integer.toString(row));
-                posicionesTomadas = true;
+                jugadaInicial = true;
             }
             
-            if (posicionesTomadas) {
-                System.out.println("tome la ficha: ");
-                System.out.println(posClicks.getPosicionInicio());
-                System.out.println(posClicks.getPosicionFin());
-                
-                String posInicial = posClicks.getPosicionInicio();
-                String posFinal = posClicks.getPosicionFin();
-                
-                casillaTomada = tablero.getCasilla(posInicial);
-                fichaTomada = casillaTomada.getFicha();
-                
-                Casilla casillaFinal = tablero.getCasilla(posFinal);
-                
-                fichaTomada.mover(casillaTomada, casillaFinal);
-                
-                
-                //TODO: ponerlas posiciones en vacio otra vez luego de mover ficha
+            if (!posClicks.getPosicionInicio().isEmpty()
+                    && !posClicks.getPosicionFin().isEmpty()) {
+                System.out.println("envia poss");
+                juego.validarPosiciones(posClicks);
                 posClicks.setPosicionInicio("");
                 posClicks.setPosicionFin("");
-                posicionesTomadas = false;
-                fichaTomada = null;
-                panelTablero.updateUI();
             }
         }
+        
     }//GEN-LAST:event_pnlTableroMouseReleased
     
 
