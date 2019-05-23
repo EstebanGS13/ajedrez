@@ -43,4 +43,9 @@ public class Alfil extends Ficha {
         g.draw(new Ellipse2D.Float(x + 18, y + 7, 13, 13));
         g.draw(polyline);
     }
+
+    @Override
+    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

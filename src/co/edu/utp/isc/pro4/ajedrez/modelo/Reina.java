@@ -37,4 +37,9 @@ public class Reina extends Ficha {
         g.draw(new Rectangle2D.Float(x + 15, y + 15, 20, 25));
         g.draw(new Rectangle2D.Float(x + 10, y + 40, 30, 5));
     }
+
+    @Override
+    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

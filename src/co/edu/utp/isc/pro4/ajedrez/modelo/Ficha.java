@@ -13,6 +13,8 @@ public abstract class Ficha extends Dibujable {
         this.color = color;
     }
 
+    public abstract boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero);
+    
     public abstract void mover(Casilla casillaInicio, Casilla casillaFin);
 
     public abstract void comer();

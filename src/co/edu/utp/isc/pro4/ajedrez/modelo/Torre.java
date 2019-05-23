@@ -27,6 +27,10 @@ public class Torre extends Ficha {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void enroque() {
+        
+    }
+    
     @Override
     public void draw(Graphics2D g, float x, float y) {
         GeneralPath polyline = new GeneralPath(GeneralPath.WIND_EVEN_ODD, 17);
@@ -56,5 +60,10 @@ public class Torre extends Ficha {
 
         g.setColor(java.awt.Color.BLACK);
         g.draw(polyline);
+    }
+
+    @Override
+    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
