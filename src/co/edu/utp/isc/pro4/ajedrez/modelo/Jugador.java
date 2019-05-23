@@ -1,27 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
 import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
 
-/**
- *
- * @author utp
- */
 public class Jugador {
 
     private Ajedrez ajedrez;
-    private String nombre;
+    private final String nombre;
+    private final Color color;
 
-    public Jugador(String nombre) {
+    public Jugador(String nombre, Color color) {
         this.nombre = nombre;
+        this.color = color;
     }
 
-    public void jugar() {
-        // TODO: Mover ficha de forma inteligente
+    public boolean jugar(Casilla casillaInicio, Casilla casillaFin, Ficha ficha, Tablero tablero) {
+        if (this.color == ficha.getColor()) {
+            System.out.println("va a mover");
+            boolean movido = ficha.validarMovimiento(
+                    casillaInicio, casillaFin, 
+                    this.color, tablero);
+            if (movido) {
+                return true;
+            }
+        }
+        System.out.println("jugador no jugo");
+        return false;     
     }
 
     public void setAjedrez(Ajedrez ajedrez) {
