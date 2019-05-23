@@ -3,11 +3,8 @@ package co.edu.utp.isc.pro4.ajedrez.ui;
 
 import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
 import co.edu.utp.isc.pro4.ajedrez.controlador.Posicion;
-import co.edu.utp.isc.pro4.ajedrez.modelo.Casilla;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Color;
-import co.edu.utp.isc.pro4.ajedrez.modelo.Ficha;
 import co.edu.utp.isc.pro4.ajedrez.modelo.Jugador;
-import co.edu.utp.isc.pro4.ajedrez.modelo.Tablero;
 
 
 public class FrmAjedrez extends javax.swing.JFrame {
