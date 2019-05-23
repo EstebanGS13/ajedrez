@@ -88,6 +88,28 @@ public class Ajedrez {
          */
     }
 
+    
+    public void validarPosiciones(Posicion posClicks) {
+        String posInicial = posClicks.getPosicionInicio();
+        String posFinal = posClicks.getPosicionFin();
+        Casilla casillaInicio = this.tablero.getCasilla(posInicial);
+        Casilla casillaFin = this.tablero.getCasilla(posFinal);
+        
+        
+        if (casillaInicio.isOcupada()) {
+            Ficha fichaTomada = casillaInicio.getFicha();
+            boolean valido = jugadores[turno].jugar(
+                    casillaInicio, casillaFin, 
+                    fichaTomada, this.tablero);
+            if (valido) {
+                mostrarTablero();
+                this.cambioTurno();
+            } else {
+                System.out.println("Mov no valido");
+            }
+        }
+    }
+    
     public void cambioTurno() {
         turno = (turno == 0 ? 1 : 0);
         cronometro.cambio();
@@ -149,4 +171,6 @@ public class Ajedrez {
 //            System.out.println();
 //        }
     }
+
+    
 }
