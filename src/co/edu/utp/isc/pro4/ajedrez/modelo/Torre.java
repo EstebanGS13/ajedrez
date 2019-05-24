@@ -13,6 +13,60 @@ public class Torre extends Ficha {
     }
 
     @Override
+    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+        char colInicio = casillaInicio.getColumna();
+        int filaInicio = casillaInicio.getFila();
+        
+        char colFin = casillaFin.getColumna();
+        int filaFin = casillaFin.getFila();
+        System.out.println(colInicio);
+        System.out.println(filaInicio);
+        System.out.println(colFin);
+        
+        System.out.println(filaFin);
+        Casilla casillaIntermedia;
+
+        if (colInicio == colFin) {              //misma columna
+            if (filaInicio  > filaFin) {        //mueve arriba
+                for (int i = filaInicio-1; i >= filaFin; i--) {
+                    casillaIntermedia = tablero.getCasilla(i, colFin);
+                    if (casillaIntermedia.isOcupada()) {
+                        return false;
+                    }
+                }
+            } else if (filaInicio < filaFin) {  //mueve abajo
+                for (int i = filaInicio+1; i <= filaFin; i++) {
+                    casillaIntermedia = tablero.getCasilla(i, colFin);
+                    System.out.println(casillaIntermedia.getFicha());
+                    if (casillaIntermedia.isOcupada()) {
+                        return false;
+                    }
+                }
+            }
+        } else if (filaInicio == filaFin) {     //misma fila
+            if (colInicio > colFin) {           //mueve izquierda
+                for (int i = colInicio-1; i >= colFin; i--) {
+                    casillaIntermedia = tablero.getCasilla(i, colFin);
+                    if (casillaIntermedia.isOcupada()) {
+                        return false;
+                    }
+                }
+            } else if (colInicio < colFin) {    //mueve derecha
+                for (int i = colInicio+1; i <= colFin; i++) {
+                    casillaIntermedia = tablero.getCasilla(i, colFin);
+                    if (casillaIntermedia.isOcupada()) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        this.mover(casillaInicio, casillaFin);
+        return true;
+    }
+    
+    @Override
     public void mover(Casilla casillaInicio, Casilla casillaFin) {
         //TODO: validar el mov de la torre
         this.setCasilla(null);
@@ -22,6 +76,7 @@ public class Torre extends Ficha {
         
     }
 
+    
     @Override
     public void comer() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -60,10 +115,5 @@ public class Torre extends Ficha {
 
         g.setColor(java.awt.Color.BLACK);
         g.draw(polyline);
-    }
-
-    @Override
-    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }  
 }
