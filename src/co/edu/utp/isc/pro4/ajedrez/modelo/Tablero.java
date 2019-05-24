@@ -31,6 +31,7 @@ public class Tablero {
     }
 
     public Casilla getCasilla(int fila, char letra) {
+        fila -= 1;
         int columna = letra - 'A';
         return getCasilla(fila, columna);
     }
