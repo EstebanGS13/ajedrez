@@ -302,7 +302,9 @@ public class FrmAjedrez extends javax.swing.JFrame {
             }
             
             if (!posClicks.getPosicionInicio().isEmpty()
-                    && !posClicks.getPosicionFin().isEmpty()) {
+                    && !posClicks.getPosicionFin().isEmpty()
+                    && !posClicks.getPosicionInicio().equals(
+                            posClicks.getPosicionFin())) {
                 System.out.println("envia poss");
                 juego.validarPosiciones(posClicks);
                 posClicks.setPosicionInicio("");
