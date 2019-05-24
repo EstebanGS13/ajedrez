@@ -13,10 +13,6 @@ public class Alfil extends Ficha {
         super(color);
     }
 
-    @Override
-    public void mover(Casilla casillaInicio, Casilla casillaFin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void comer() {
@@ -46,6 +42,7 @@ public class Alfil extends Ficha {
 
     @Override
     public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.mover(casillaInicio, casillaFin);
+        return true;
     }
 }
