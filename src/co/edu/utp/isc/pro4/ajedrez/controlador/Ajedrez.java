@@ -107,6 +107,8 @@ public class Ajedrez {
             } else {
                 System.out.println("Mov no valido");
             }
+        } else{
+            System.out.println("no hay nada");
         }
     }
     
