@@ -30,6 +30,10 @@ public class Tablero {
         return casillas[fila][columna];
     }
 
+    public Casilla getCasilla(int fila, char letra) {
+        int columna = letra - 'A';
+        return getCasilla(fila, columna);
+    }
     public Casilla getCasilla(String posicion) {
         int columna = posicion.charAt(0) - 'A';
         int fila = Integer.valueOf(posicion.substring(1)) - 1;
