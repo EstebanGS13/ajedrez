@@ -15,7 +15,13 @@ public class Jugador {
     }
 
     public boolean jugar(Casilla casillaInicio, Casilla casillaFin, Ficha ficha, Tablero tablero) {
-        if (this.color == ficha.getColor()) {
+        if (this.color == ficha.getColor()) {   //si color jugador y color ficha son iguales
+            if (casillaFin.isOcupada()) {
+                if (this.color == casillaFin.getFicha().getColor()) {   //si el color de la ficha en casilla final es igual al del jugador
+                    System.out.println("Fichas posI y posF mismo color");
+                    return false;
+                }
+            }
             System.out.println("va a mover");
             boolean movido = ficha.validarMovimiento(
                     casillaInicio, casillaFin, 
@@ -40,5 +46,4 @@ public class Jugador {
         // No me gusta pero los estudiantes lo pidieron
         ajedrez.rendirse();
     }
-
 }
