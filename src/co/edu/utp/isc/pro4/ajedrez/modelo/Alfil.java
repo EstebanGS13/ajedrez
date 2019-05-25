@@ -23,46 +23,45 @@ public class Alfil extends Ficha {
         
         Casilla casillaIntermedia = null;
         
-        if (colInicio > colFin && filaInicio > filaFin) {
-            System.out.println("noroeste");
+        if (colInicio > colFin && filaInicio > filaFin) {           //noroeste
             for (int i = filaInicio-1, j = colInicio-1; 
                     i >= filaFin && j >= colFin;
                     i--, j--) {
                 casillaIntermedia = tablero.getCasilla(i, j);
-                if (casillaIntermedia.isOcupada()) {
-                        return false;
+                if (casillaIntermedia != casillaFin 
+                        && casillaIntermedia.isOcupada()) {
+                    return false;
                 }
             }
-        } else if (colInicio > colFin && filaInicio < filaFin) {
-                System.out.println("suroeste");
+        } else if (colInicio > colFin && filaInicio < filaFin) {    //suroeste
             for (int i = filaInicio+1, j = colInicio-1; 
                     i <= filaFin && j >= colFin;
                     i++, j--) {
                 casillaIntermedia = tablero.getCasilla(i, j);
-                if (casillaIntermedia.isOcupada()) {
-                        return false;
+                if (casillaIntermedia != casillaFin 
+                        && casillaIntermedia.isOcupada()) {
+                    return false;
                 }
             }
-        } else if (colInicio < colFin && filaInicio > filaFin) {
-            System.out.println("noreste");
+        } else if (colInicio < colFin && filaInicio > filaFin) {    //noreste
             for (int i = filaInicio-1, j = colInicio+1; 
                     i >= filaFin && j <= colFin;
                     i--, j++) {
                 casillaIntermedia = tablero.getCasilla(i, j);
-                if (casillaIntermedia.isOcupada()) {
-                        return false;
+                if (casillaIntermedia != casillaFin 
+                        && casillaIntermedia.isOcupada()) {
+                    return false;
                 }
             }
-        } else if (colInicio < colFin && filaInicio < filaFin) {
-            System.out.println("sureste");
+        } else if (colInicio < colFin && filaInicio < filaFin) {    //sureste
             for (int i = filaInicio+1, j = colInicio+1; 
                     i <= filaFin && j <= colFin;
                     i++, j++) {
                 casillaIntermedia = tablero.getCasilla(i, j);
-                if (casillaIntermedia.isOcupada()) {
-                        return false;
+                if (casillaIntermedia != casillaFin 
+                        && casillaIntermedia.isOcupada()) {
+                    return false;
                 }
-                System.out.println("sale");
             }
         }
         if (casillaIntermedia == casillaFin) {
@@ -78,7 +77,7 @@ public class Alfil extends Ficha {
     
     @Override
     public void comer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("come...");
     }
 
     @Override
