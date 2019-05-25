@@ -14,76 +14,79 @@ public class Torre extends Ficha {
 
     @Override
     public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
-        char colInicio = casillaInicio.getColumna();
-        int filaInicio = casillaInicio.getFila();
+        int colInicio = casillaInicio.getColumna() - 'A';
+        int filaInicio = casillaInicio.getFila() - 1;
         
-        char colFin = casillaFin.getColumna();
-        int filaFin = casillaFin.getFila();
-        System.out.println(colInicio);
-        System.out.println(filaInicio);
-        System.out.println(colFin);
+        int colFin = casillaFin.getColumna() - 'A';
+        int filaFin = casillaFin.getFila() - 1;
         
-        System.out.println(filaFin);
-        Casilla casillaIntermedia;
+        Casilla casillaIntermedia = null;
 
         if (colInicio == colFin) {              //misma columna
             if (filaInicio  > filaFin) {        //mueve arriba
                 for (int i = filaInicio-1; i >= filaFin; i--) {
                     casillaIntermedia = tablero.getCasilla(i, colFin);
-                    if (casillaIntermedia.isOcupada()) {
+                    if (casillaIntermedia != casillaFin
+                            && casillaIntermedia.isOcupada()) {
                         return false;
                     }
                 }
             } else if (filaInicio < filaFin) {  //mueve abajo
                 for (int i = filaInicio+1; i <= filaFin; i++) {
                     casillaIntermedia = tablero.getCasilla(i, colFin);
-                    System.out.println(casillaIntermedia.getFicha());
-                    if (casillaIntermedia.isOcupada()) {
+                    if (casillaIntermedia != casillaFin 
+                            && casillaIntermedia.isOcupada()) {
                         return false;
                     }
                 }
             }
         } else if (filaInicio == filaFin) {     //misma fila
             if (colInicio > colFin) {           //mueve izquierda
-                for (int i = colInicio-1; i >= colFin; i--) {
-                    casillaIntermedia = tablero.getCasilla(i, colFin);
-                    if (casillaIntermedia.isOcupada()) {
+                for (int j = colInicio-1; j >= colFin; j--) {
+                    casillaIntermedia = tablero.getCasilla(filaFin, j);
+                    if (casillaIntermedia != casillaFin 
+                            && casillaIntermedia.isOcupada()) {
                         return false;
                     }
                 }
             } else if (colInicio < colFin) {    //mueve derecha
-                for (int i = colInicio+1; i <= colFin; i++) {
-                    casillaIntermedia = tablero.getCasilla(i, colFin);
-                    if (casillaIntermedia.isOcupada()) {
+                for (int j = colInicio+1; j <= colFin; j++) {
+                    casillaIntermedia = tablero.getCasilla(filaFin, j);
+                    if (casillaIntermedia != casillaFin 
+                            && casillaIntermedia.isOcupada()) {
                         return false;
                     }
                 }
             }
-        } else {
-            return false;
         }
-        this.mover(casillaInicio, casillaFin);
-        return true;
+        if (casillaIntermedia == casillaFin) {
+            if (casillaFin.isOcupada()) {
+                this.comer();
+                return true;
+            }
+            this.mover(casillaInicio, casillaFin);
+            return true;
+        }
+        return false;
     }
     
     @Override
     public void mover(Casilla casillaInicio, Casilla casillaFin) {
-        //TODO: validar el mov de la torre
         this.setCasilla(null);
         this.setCasilla(casillaFin);
         casillaFin.setFicha(this);
-        casillaInicio.setFicha(null);
-        
+        casillaInicio.setFicha(null);   
     }
 
     
     @Override
     public void comer() {
+        System.out.println("come...");
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void enroque() {
-        
+        //TODO: mov del enroque
     }
     
     @Override
