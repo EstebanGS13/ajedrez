@@ -88,13 +88,11 @@ public class Ajedrez {
          */
     }
 
-    
-    public void validarPosiciones(Posicion posClicks) {
+    public int validarPosiciones(Posicion posClicks) {
         String posInicial = posClicks.getPosicionInicio();
         String posFinal = posClicks.getPosicionFin();
         Casilla casillaInicio = this.tablero.getCasilla(posInicial);
         Casilla casillaFin = this.tablero.getCasilla(posFinal);
-        
         
         if (casillaInicio.isOcupada()) {
             Ficha fichaTomada = casillaInicio.getFicha();
@@ -104,12 +102,14 @@ public class Ajedrez {
             if (valido) {
                 mostrarTablero();
                 this.cambioTurno();
+                return this.turno;
             } else {
                 System.out.println("Mov no valido");
             }
         } else{
             System.out.println("no hay nada");
         }
+        return this.turno;
     }
     
     public void cambioTurno() {
@@ -154,7 +154,6 @@ public class Ajedrez {
             asociarFichaTablero(tablero.getCasilla(1, i), new Peon(Color.BLANCO));
             asociarFichaTablero(tablero.getCasilla(6, i), new Peon(Color.NEGRO));
         }
-
     }
 
     private void asociarFichaTablero(Casilla c, Ficha f) {
@@ -173,6 +172,4 @@ public class Ajedrez {
 //            System.out.println();
 //        }
     }
-
-    
 }
