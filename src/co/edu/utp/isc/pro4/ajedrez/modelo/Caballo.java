@@ -12,10 +12,65 @@ public class Caballo extends Ficha {
         super(color);
     }
 
-
-
+    @Override
+    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+        int colInicio = casillaInicio.getColumna() - 'A';
+        int filaInicio = casillaInicio.getFila() - 1;
+        
+        int colFin = casillaFin.getColumna() - 'A';
+        int filaFin = casillaFin.getFila() - 1;
+        
+        if (colInicio == colFin || filaInicio == filaFin) {     //si casilla final esta en la misma fila o misma columna
+            return false;
+        }
+        
+        int i = filaInicio;
+        int j = colInicio;
+        boolean encontrado = false;
+        
+        if (filaInicio > filaFin) {
+            if (colInicio > colFin) {
+                if (filaFin == i-1 && colFin == j-2) {
+                    encontrado = true;
+                } else if (filaFin == i-2 && colFin == j-1) {
+                    encontrado = true;
+                }
+            } else if (colInicio < colFin) {
+                if (filaFin == i-1 && colFin == j+2) {
+                    encontrado = true;
+                } else if (filaFin == i-2 && colFin == j+1) {
+                    encontrado = true;
+                }
+            }
+        } else if (filaInicio < filaFin) {
+            if (colInicio > colFin) {
+                if (filaFin == i+1 && colFin == j-2) {
+                    encontrado = true;
+                } else if (filaFin == i+2 && colFin == j-1) {
+                    encontrado = true;
+                }
+            } else if (colInicio < colFin) {
+                if (filaFin == i+1 && colFin == j+2) {
+                    encontrado = true;
+                } else if (filaFin == i+2 && colFin == j+1) {
+                    encontrado = true;
+                }
+            }
+        }
+        if (encontrado) {
+            if (casillaFin.isOcupada()) {
+                this.comer();
+                return true;
+            }
+            this.mover(casillaInicio, casillaFin);
+            return true;
+        }
+        return false;
+    }
+    
     @Override
     public void comer() {
+        System.out.println("come...");
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -44,11 +99,5 @@ public class Caballo extends Ficha {
 
         g.setColor(java.awt.Color.BLACK);
         g.draw(polyline);
-    }
-
-    @Override
-    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
-        this.mover(casillaInicio, casillaFin);
-        return true;
     }
 }
