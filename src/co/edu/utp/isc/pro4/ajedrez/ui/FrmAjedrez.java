@@ -63,11 +63,21 @@ public class FrmAjedrez extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre Blancas");
 
-        txtBlancas.setText("Cesar");
+        txtBlancas.setText("Blancas");
+        txtBlancas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBlancasActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nombre Negras");
 
-        txtNegras.setText("Ana");
+        txtNegras.setText("Negras");
+        txtNegras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNegrasActionPerformed(evt);
+            }
+        });
 
         btnJugar.setText("Iniciar partida");
         btnJugar.addActionListener(new java.awt.event.ActionListener() {
@@ -252,7 +262,7 @@ public class FrmAjedrez extends javax.swing.JFrame {
 
         lblJugador.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblJugador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJugador.setText("Cesar");
+        lblJugador.setText("Blancas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -306,7 +316,10 @@ public class FrmAjedrez extends javax.swing.JFrame {
                     && !posClicks.getPosicionInicio().equals(
                             posClicks.getPosicionFin())) {
                 System.out.println("envia poss");
-                juego.validarPosiciones(posClicks);
+                int turnoNum = juego.validarPosiciones(posClicks);      //toma turno del siguiente jugador
+                String turnoMsj = (turnoNum == 0) ? "Blancas" : "Negras"; //txtBlancas.getName() : txtNegras.getName();
+                lblJugador.setText(turnoMsj);
+                
                 posClicks.setPosicionInicio("");
                 posClicks.setPosicionFin("");
             }
@@ -324,8 +337,15 @@ public class FrmAjedrez extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlTableroMouseMoved
 
+    private void txtBlancasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBlancasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBlancasActionPerformed
+
+    private void txtNegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNegrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNegrasActionPerformed
+
     
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

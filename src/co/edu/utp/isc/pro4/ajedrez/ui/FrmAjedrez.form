@@ -91,8 +91,11 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtBlancas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cesar"/>
+            <Property name="text" type="java.lang.String" value="Blancas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBlancasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -101,8 +104,11 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtNegras">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ana"/>
+            <Property name="text" type="java.lang.String" value="Negras"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNegrasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnJugar">
           <Properties>
@@ -742,7 +748,7 @@
                       <Font name="Tahoma" size="24" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Cesar"/>
+                    <Property name="text" type="java.lang.String" value="Blancas"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
