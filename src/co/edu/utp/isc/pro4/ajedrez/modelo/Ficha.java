@@ -2,6 +2,7 @@
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
 import co.edu.utp.isc.pro4.ajedrez.controlador.Dibujable;
+import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
 
 
 public abstract class Ficha extends Dibujable {
@@ -13,16 +14,55 @@ public abstract class Ficha extends Dibujable {
         this.color = color;
     }
 
-    public abstract boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero);
+    public abstract boolean validarMovimiento(Ajedrez juego, 
+            Casilla casillaInicio, Casilla casillaFin, 
+            Color color, Tablero tablero, boolean ejecutar);
     
-    public void mover(Casilla casillaInicio, Casilla casillaFin){
+    public boolean mover(Ajedrez juego, Casilla casillaInicio, 
+            Casilla casillaFin, Color colorRey){
         this.setCasilla(null);
         casillaInicio.setFicha(null);
         this.setCasilla(casillaFin);
         casillaFin.setFicha(this);
+        
+        boolean movLegal = juego.reySeguro(color);
+        if (!movLegal) {                    //revierte el mov si es ilegal
+            this.setCasilla(null);
+            casillaFin.setFicha(null);
+            this.setCasilla(casillaInicio);
+            casillaInicio.setFicha(this);
+            return false;
+        }
+        return true;
     }
 
-    public abstract void comer();
+    public boolean comer(Ajedrez juego, Casilla casillaInicio, 
+            Casilla casillaFin, Color color) {
+        Ficha fichaCapturada = casillaFin.getFicha();
+        
+        fichaCapturada.setCasilla(null);
+        casillaFin.setFicha(null);
+        
+        this.setCasilla(null);
+        casillaInicio.setFicha(null);
+        
+        this.setCasilla(casillaFin);
+        casillaFin.setFicha(this);
+        
+        boolean movLegal = juego.reySeguro(color);
+        if (!movLegal) {                             // revierte el mov si es ilegal
+            this.setCasilla(null);                   // pone en nulls la final
+            casillaFin.setFicha(null);
+            
+            this.setCasilla(casillaInicio);          // mueve la ficha a casilla inicio
+            casillaInicio.setFicha(this);
+            
+            fichaCapturada.setCasilla(casillaFin);   // la ficha q captuar es regresada a casilla fin
+            casillaFin.setFicha(fichaCapturada);
+            return false;
+        }
+        return true;
+    }
 
     public Casilla getCasilla() {
         return casilla;
@@ -48,7 +88,7 @@ public abstract class Ficha extends Dibujable {
         } else if (this instanceof Alfil) {
             tipo = "A";
         } else if (this instanceof Reina) {
-            tipo = "Q";
+            tipo = "D";
         } else if (this instanceof Rey) {
             tipo = "R";
         }
