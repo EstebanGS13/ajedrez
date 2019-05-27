@@ -4,27 +4,27 @@ package co.edu.utp.isc.pro4.ajedrez.controlador;
 
 public class Posicion {
     
-    private String posicionInicio;
-    private String posicionFin;
+    private String posicionUno;
+    private String posicionDos;
 
     public Posicion() {
-        this.posicionInicio = "";
-        this.posicionFin = "";
+        this.posicionUno = "";
+        this.posicionDos = "";
     }
 
-    public String getPosicionInicio() {
-        return posicionInicio;
+    public String getPosicionUno() {
+        return posicionUno;
     }
 
-    public String getPosicionFin() {
-        return posicionFin;
+    public String getPosicionDos() {
+        return posicionDos;
     }
 
-    public void setPosicionInicio(String posicionInicio) {
-        this.posicionInicio = posicionInicio;
+    public void setPosicionUno(String posicionUno) {
+        this.posicionUno = posicionUno;
     }
 
-    public void setPosicionFin(String posicionFin) {
-        this.posicionFin = posicionFin;
+    public void setPosicionDos(String posicionDos) {
+        this.posicionDos = posicionDos;
     }
 }
