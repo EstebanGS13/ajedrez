@@ -1,6 +1,7 @@
 
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
+import co.edu.utp.isc.pro4.ajedrez.controlador.Ajedrez;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
@@ -13,7 +14,9 @@ public class Caballo extends Ficha {
     }
 
     @Override
-    public boolean validarMovimiento(Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero) {
+    public boolean validarMovimiento(Ajedrez juego, 
+            Casilla casillaInicio, Casilla casillaFin, 
+            Color color, Tablero tablero, boolean ejecutar) {
         int colInicio = casillaInicio.getColumna() - 'A';
         int filaInicio = casillaInicio.getFila() - 1;
         
@@ -58,20 +61,15 @@ public class Caballo extends Ficha {
             }
         }
         if (encontrado) {
-            if (casillaFin.isOcupada()) {
-                this.comer();
+            if (!ejecutar) {
                 return true;
             }
-            this.mover(casillaInicio, casillaFin);
-            return true;
+            if (casillaFin.isOcupada()) {
+                return this.comer(juego, casillaInicio, casillaFin, color);
+            }
+            return this.mover(juego, casillaInicio, casillaFin, color);
         }
         return false;
-    }
-    
-    @Override
-    public void comer() {
-        System.out.println("come...");
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
