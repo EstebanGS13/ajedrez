@@ -302,29 +302,28 @@ public class FrmAjedrez extends javax.swing.JFrame {
             String posicion = (char) ('A' + col - 1) + Integer.toString(row);
             
             if (jugadaInicial) {
-                posClicks.setPosicionInicio(posicion);
+                posClicks.setPosicionUno(posicion);
                 txtInicio.setText((char) ('A' + col - 1) + Integer.toString(row));
                 jugadaInicial = false;
             } else {
-                posClicks.setPosicionFin(posicion);
+                posClicks.setPosicionDos(posicion);
                 txtFin.setText((char) ('A' + col - 1) + Integer.toString(row));
                 jugadaInicial = true;
             }
             
-            if (!posClicks.getPosicionInicio().isEmpty()
-                    && !posClicks.getPosicionFin().isEmpty()
-                    && !posClicks.getPosicionInicio().equals(
-                            posClicks.getPosicionFin())) {
+            if (!posClicks.getPosicionUno().isEmpty()
+                    && !posClicks.getPosicionDos().isEmpty()
+                    && !posClicks.getPosicionUno().equals(
+                            posClicks.getPosicionDos())) {
                 System.out.println("envia poss");
                 int turnoNum = juego.validarPosiciones(posClicks);      //toma turno del siguiente jugador
                 String turnoMsj = (turnoNum == 0) ? "Blancas" : "Negras"; //txtBlancas.getName() : txtNegras.getName();
                 lblJugador.setText(turnoMsj);
                 
-                posClicks.setPosicionInicio("");
-                posClicks.setPosicionFin("");
+                posClicks.setPosicionUno("");
+                posClicks.setPosicionDos("");
             }
         }
-        
     }//GEN-LAST:event_pnlTableroMouseReleased
     
 
