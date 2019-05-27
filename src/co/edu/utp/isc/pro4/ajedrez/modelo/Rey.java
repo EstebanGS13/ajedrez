@@ -25,14 +25,45 @@ public class Rey extends Ficha {
         
         int colFin = casillaFin.getColumna() - 'A';
         int filaFin = casillaFin.getFila() - 1;
-        //TODO: implementar el mov del rey
-        if (primerMov) {
-            //si mueve dos+ casillas... si enoque...
-        } else {
-            
-        }
         
-        //this.mover(casillaInicio, casillaFin);
+        int i = filaInicio;
+        int j = colInicio;
+        boolean encontrado = false;
+        
+        if (filaFin == filaInicio-1) {
+            if (colFin == colInicio-1) {
+                encontrado = true;
+            } else if (colFin == colInicio) {
+                encontrado = true;
+            } else if (colFin == colInicio+1) {
+                encontrado = true;
+            }
+        } else if (filaFin == filaInicio) {
+            if (colFin == colInicio-1) {
+                encontrado = true;
+            } else if (colFin == colInicio+1) {
+                encontrado = true;
+            }
+        } else if (filaFin == filaInicio+1) {
+            if (colFin == colInicio-1) {
+                encontrado = true;
+            } else if (colFin == colInicio) {
+                encontrado = true;
+            } else if (colFin == colInicio+1) {
+                encontrado = true;
+            }
+        } else {
+            //TODO: enroque?
+        }
+        if (encontrado) {
+            if (!ejecutar) {
+                return true;
+            }
+            if (casillaFin.isOcupada()) {
+                return this.comer(juego, casillaInicio, casillaFin, color);
+            }
+            return this.mover(juego, casillaInicio, casillaFin, color);
+        }
         return false;
     }
     
