@@ -206,6 +206,7 @@ public class FrmAjedrez extends javax.swing.JFrame {
         txtMovimientos.setEditable(false);
         txtMovimientos.setColumns(20);
         txtMovimientos.setRows(5);
+        txtMovimientos.setText("B: ");
         jScrollPane1.setViewportView(txtMovimientos);
 
         jPanel5.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -316,10 +317,12 @@ public class FrmAjedrez extends javax.swing.JFrame {
                     && !posClicks.getPosicionUno().equals(
                             posClicks.getPosicionDos())) {
                 System.out.println("envia poss");
-                int turnoNum = juego.validarPosiciones(posClicks);      //toma turno del siguiente jugador
-                String turnoMsj = (turnoNum == 0) ? "Blancas" : "Negras"; //txtBlancas.getName() : txtNegras.getName();
+                int turnoNum = juego.validarPosiciones(posClicks);          //toma turno del siguiente jugador
+                String turnoMsj = (turnoNum == 0) ? "Blancas" : "Negras";   //txtBlancas.getName() : txtNegras.getName();
                 lblJugador.setText(turnoMsj);
-                
+                txtMovimientos.append(posClicks.getPosicionUno() 
+                        + " -> " + posClicks.getPosicionDos()  
+                        + "\n" + turnoMsj.charAt(0) + ": ");
                 posClicks.setPosicionUno("");
                 posClicks.setPosicionDos("");
             }
