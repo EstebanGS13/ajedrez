@@ -45,6 +45,10 @@ public class Ajedrez {
         this.jugadores[0] = jugador1;
         this.jugadores[1] = jugador2;
     }
+
+    public void setPosReyes(int turno, String nuevaPos) {
+        this.posReyes[turno] = nuevaPos;
+    }
     
     public PnlTablero getPnlTablero() {
         return pnlTablero;
@@ -129,14 +133,6 @@ public class Ajedrez {
         cronometro.cambio();
     }
 
-    private boolean validarJaque(Color color) {
-        
-        boolean safe = reySeguro(color);
-        //TODO: ejecutar a comer para validar jM
-        return false;
-    }
-    
-    
     public boolean reySeguro(Color color) {
         int turnoRey = (color == Color.BLANCO) ? 0 : 1;
         Casilla reyUbicacion = tablero.getCasilla(posReyes[turnoRey]);
@@ -160,11 +156,56 @@ public class Ajedrez {
         return true;
     }
     
-    
-    private boolean validarJaqueMate() {
-        //TODO: Validar si el jugador contrario ha quedado en Jaque Mate
-        // loop de todas las fichas aliadas si ninguna puede mover entonces es jaque
+    private boolean reySalvable(Color colorRey) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Casilla casillaTomada = tablero.getCasilla(i, j);
+                Ficha fichaTomada = casillaTomada.getFicha();
+                if (casillaTomada.isOcupada()) {
+                    if (fichaTomada.getColor() != colorRey) {
+                        continue;
+                    }
+                    for (int k = 0; k < 8; k++) {
+                        for (int l = 0; l < 8; l++) {
+                            Casilla casillaFin = tablero.getCasilla(k, l);
+                            if (casillaTomada != casillaFin) {
+                                if (casillaFin.isOcupada() 
+                                        && (casillaFin.getFicha().getColor() 
+                                        != fichaTomada.getColor())) {
+                                    continue;
+                                }
+                                boolean puedeMover = fichaTomada.validarMovimiento(
+                                        this, casillaTomada, casillaFin, 
+                                        colorRey, tablero, true);
+                                if (puedeMover) {
+                                    return true;
+                                }
+                            }      
+                        }
+                    }
+                }
+            }
+        }
         return false;
+    }
+    
+    private boolean validarJaque(Color colorRey) {
+        
+        boolean safe = reySeguro(colorRey);
+        if (!safe) {
+            if (validarJaqueMate(colorRey)) {
+                System.out.println("Ha perdido");
+            }
+        }
+        return false;
+    }
+    
+    private boolean validarJaqueMate(Color colorRey) {
+        if (reySalvable(colorRey)) {
+            return false;
+        }
+        System.out.println("jaqueMate");
+        return true;
     }
 
     private boolean validarTablas() {
