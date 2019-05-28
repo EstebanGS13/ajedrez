@@ -14,18 +14,19 @@ public class Jugador {
         this.color = color;
     }
 
-    public boolean jugar(Casilla casillaInicio, Casilla casillaFin, Ficha ficha, Tablero tablero) {
-        if (this.color == ficha.getColor()) {   //si color jugador y color ficha son iguales
+    public boolean jugar(Casilla casillaInicio, Casilla casillaFin, 
+            Ficha ficha, Tablero tablero, Ajedrez juego) {
+        if (this.color == ficha.getColor()) {                            //si color jugador y color ficha son iguales
             if (casillaFin.isOcupada()) {
-                if (this.color == casillaFin.getFicha().getColor()) {   //si el color de la ficha en casilla final es igual al del jugador
+                if (this.color == casillaFin.getFicha().getColor()) {    //si el color de la ficha en casilla final es igual al del jugador
                     System.out.println("Fichas posI y posF mismo color");
                     return false;
                 }
             }
             System.out.println("va a mover");
-            boolean movido = ficha.validarMovimiento(
+            boolean movido = ficha.validarMovimiento(juego,
                     casillaInicio, casillaFin, 
-                    this.color, tablero);
+                    this.color, tablero, true);
             if (movido) {
                 return true;
             }
@@ -40,6 +41,10 @@ public class Jugador {
 
     public String getNombre() {
         return this.nombre;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     private void rendirse() {
