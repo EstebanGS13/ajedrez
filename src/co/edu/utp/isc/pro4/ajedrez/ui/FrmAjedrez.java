@@ -298,16 +298,16 @@ public class FrmAjedrez extends javax.swing.JFrame {
     private void pnlTableroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTableroMouseReleased
         if (juego != null) {
             int col = 1 + evt.getX() / 50;
-            int row = 1 + evt.getY() / 50;
+            int row = 9 - (1 + evt.getY() / 50);
             String posicion = (char) ('A' + col - 1) + Integer.toString(row);
             
             if (jugadaInicial) {
                 posClicks.setPosicionUno(posicion);
-                txtInicio.setText((char) ('A' + col - 1) + Integer.toString(row));
+                txtInicio.setText(posicion);
                 jugadaInicial = false;
             } else {
                 posClicks.setPosicionDos(posicion);
-                txtFin.setText((char) ('A' + col - 1) + Integer.toString(row));
+                txtFin.setText(posicion);
                 jugadaInicial = true;
             }
             
@@ -331,7 +331,7 @@ public class FrmAjedrez extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (juego != null) {
             int col = 1 + evt.getX() / 50;
-            int row = 1 + evt.getY() / 50;
+            int row = 9 - (1 + evt.getY() / 50);
             pnlTablero.setToolTipText((char) ('A' + col - 1) + Integer.toString(row));
         }
     }//GEN-LAST:event_pnlTableroMouseMoved
