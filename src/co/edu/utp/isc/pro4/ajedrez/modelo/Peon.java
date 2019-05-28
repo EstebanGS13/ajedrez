@@ -20,96 +20,60 @@ public class Peon extends Ficha {
     @Override
     public boolean validarMovimiento(
             Ajedrez juego, Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero, boolean ejecutar) {
-//        int colInicio = casillaInicio.getColumna() - 'A';
-//        int filaInicio = casillaInicio.getFila() - 1;
-//        
-//        int colFin = casillaFin.getColumna() - 'A';
-//        int filaFin = casillaFin.getFila() - 1;
-//        
-//        if (colFin < colInicio-1 || colFin > colInicio+1) {
-//            return false;
-//        }
-//        
-//        int i = filaInicio;
-//        int j = colInicio;
-//        boolean encontrado = false;
+        int colInicio = casillaInicio.getColumna() - 'A';
+        int filaInicio = casillaInicio.getFila() - 1;
         
-        if (!ejecutar) {
+        int colFin = casillaFin.getColumna() - 'A';
+        int filaFin = casillaFin.getFila() - 1;
+        
+        if (colFin < colInicio-1 || colFin > colInicio+1) {
             return false;
         }
-        //XXX
-        //TODO: mejorar el mov del peon
-        char colInicio = casillaInicio.getColumna();
-        int filaInicio = casillaInicio.getFila();
         
-        char colFin = casillaFin.getColumna();
-        int filaFin = casillaFin.getFila();
-        
-        if (color == Color.BLANCO){
-            if (colInicio == colFin && filaInicio < filaFin) {
-                if (primerMov) {                                    //si se va a mover por primera vez
-                    if (filaFin == (filaInicio+2)) { 
-                        String posIntermedia = colInicio + Integer.toString(filaInicio+1);
-                        Casilla casillaIntermedia = tablero.getCasilla(posIntermedia);
-                        if (!casillaIntermedia.isOcupada()
-                                && !casillaFin.isOcupada()) {       //si la casilla intermedia y final estan libres
-                            this.mover(juego, casillaInicio, casillaFin, color);
-                            primerMov = false;
-                            return true;
-                        }
-                    } else if (filaFin == (filaInicio+1)){          //si al inicio solo se mueve 1 casilla
-                        if (!casillaFin.isOcupada()) {
-                            this.mover(juego, casillaInicio, casillaFin, color);
-                            primerMov = false;
-                            return true;
-                        }
-                    }
-                } else {
-                    //mov luego del primer mov...
-                    if (filaFin == (filaInicio+1)) {
-                        this.mover(juego, casillaInicio, casillaFin, color);
-                        return true;
-                    }
+        int i = filaInicio;
+        int j = colInicio;
+        boolean encontrado = false;
+        boolean come = false;
+        Casilla intermedia = null;
+        if (colFin == colInicio) {
+            if (color == Color.BLANCO) {
+                if ((filaFin == i+1) && (!casillaFin.isOcupada())) {
+                    encontrado = true;
+                } else if ((filaFin == i+2) && primerMov
+                       && (!casillaFin.isOcupada())) {
+                    intermedia = tablero.getCasilla(i+1, colFin);
+                    if (!intermedia.isOcupada()){
+                        encontrado = true;
+                    }    
                 }
-            } else if(colFin < colInicio || colFin > colInicio){
-                //TODO: validar cuando come
-                System.out.println("come...");
-                this.comer(juego, casillaInicio, casillaFin, color);
-                return true;
+            } else if (color == Color.NEGRO) {
+                if ((filaFin == i-1) && (!casillaFin.isOcupada())) {
+                    encontrado = true;
+                } else if ((filaFin == i-2) && primerMov
+                        && (!casillaFin.isOcupada())) {
+                    intermedia = tablero.getCasilla(i-1, colFin);
+                    if (!intermedia.isOcupada()){
+                        encontrado = true;
+                    }    
+                }
+            }
+        } else if ((colFin == j-1) || (colFin == j+1)) {
+            if ((filaFin == i+1) && casillaFin.isOcupada()) {
+                come = true;
+            } else if ((filaFin == i-1) && casillaFin.isOcupada()) {
+                come = true;
             }
         }
-        else if (color == Color.NEGRO) {
-            if (colInicio == colFin && filaInicio > filaFin) {      //si la columna es la misma y fila es menor
-                if (primerMov) {                                    //si se va a mover por primera vez
-                    if (filaFin == (filaInicio-2)) {                //si la casilla dada coincide con su posible movimiento inicial de 2 casillas
-                        String posIntermedia = colInicio + Integer.toString(filaInicio-1);
-                        Casilla casillaIntermedia = tablero.getCasilla(posIntermedia);
-                        if (!casillaIntermedia.isOcupada()
-                                && !casillaFin.isOcupada()) {       //si la casilla intermedia y final estan libres
-                            this.mover(juego, casillaInicio, casillaFin, color);
-                            primerMov = false;
-                            return true;
-                        }
-                    } else if (filaFin == (filaInicio-1)){
-                        if (!casillaFin.isOcupada()) {
-                            this.mover(juego, casillaInicio, casillaFin, color);
-                            primerMov = false;
-                            return true;
-                        }
-                    }
-                } else {
-                    //mov luego del primer mov...
-                    if (filaFin == (filaInicio-1)) {
-                        this.mover(juego, casillaInicio, casillaFin, color);
-                        return true;
-                    }
-                }
-            } else if(colFin < colInicio || colFin > colInicio){
-                //TODO: validar cuando come
-                System.out.println("come...");
-                this.comer(juego, casillaInicio, casillaFin, color);
+        if (encontrado) {
+            if (!ejecutar) {
                 return true;
-            } 
+            }
+            return this.mover(juego, casillaInicio, casillaFin, color);
+        } else if (come) {
+            if (!ejecutar) {
+                return true;
+            }
+            return this.comer(juego, casillaInicio, casillaFin, color);
         }
         return false;
     }
