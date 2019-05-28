@@ -20,19 +20,23 @@ public class Ajedrez {
 
     /*Temporal*/
     private PnlTablero pnlTablero;
-
     private Jugador[] jugadores;
     private Tablero tablero;
     private Cronometro cronometro;
-
+    private String[] posReyes;
+    
     private int turno;
+    private boolean jugadorEnJaque;
     private boolean terminado;
+    
 
     public Ajedrez() {
         jugadores = new Jugador[2];
         tablero = new Tablero();
         cronometro = new Cronometro();
+        posReyes = new String[2];
         turno = 0;
+        jugadorEnJaque = false;
         terminado = false;
     }
 
@@ -41,7 +45,7 @@ public class Ajedrez {
         this.jugadores[0] = jugador1;
         this.jugadores[1] = jugador2;
     }
-
+    
     public PnlTablero getPnlTablero() {
         return pnlTablero;
     }
@@ -54,9 +58,10 @@ public class Ajedrez {
     public void jugar() {
         jugadores[0].setAjedrez(this);
         jugadores[1].setAjedrez(this);
-
+        posReyes[0] = "E1";
+        posReyes[1] = "E8";
         ubicarFichasTablero();
-
+        
         cronometro.iniciar();
         mostrarTablero();
         /*
@@ -89,8 +94,8 @@ public class Ajedrez {
     }
 
     public int validarPosiciones(Posicion posClicks) {
-        String posInicial = posClicks.getPosicionInicio();
-        String posFinal = posClicks.getPosicionFin();
+        String posInicial = posClicks.getPosicionUno();
+        String posFinal = posClicks.getPosicionDos();
         Casilla casillaInicio = this.tablero.getCasilla(posInicial);
         Casilla casillaFin = this.tablero.getCasilla(posFinal);
         
@@ -98,10 +103,17 @@ public class Ajedrez {
             Ficha fichaTomada = casillaInicio.getFicha();
             boolean valido = jugadores[turno].jugar(
                     casillaInicio, casillaFin, 
-                    fichaTomada, this.tablero);
+                    fichaTomada, this.tablero, this);
             if (valido) {
+                if (fichaTomada instanceof Rey) {
+                    int fila = casillaFin.getFila();
+                    char col = casillaFin.getColumna();
+                    String nuevaPos = (col) + Integer.toString(fila);
+                    posReyes[turno] = nuevaPos;
+                }
                 mostrarTablero();
                 this.cambioTurno();
+                boolean enJaque = validarJaque(jugadores[turno].getColor());
                 return this.turno;
             } else {
                 System.out.println("Mov no valido");
@@ -117,8 +129,41 @@ public class Ajedrez {
         cronometro.cambio();
     }
 
+    private boolean validarJaque(Color color) {
+        
+        boolean safe = reySeguro(color);
+        //TODO: ejecutar a comer para validar jM
+        return false;
+    }
+    
+    
+    public boolean reySeguro(Color color) {
+        int turnoRey = (color == Color.BLANCO) ? 0 : 1;
+        Casilla reyUbicacion = tablero.getCasilla(posReyes[turnoRey]);
+        
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Casilla casilla = tablero.getCasilla(i, j);
+                Ficha fichaEvaluada = casilla.getFicha();
+                if (casilla.isOcupada() 
+                        && fichaEvaluada.getColor() != color) {
+                    boolean amenaza = fichaEvaluada.validarMovimiento(
+                            this, casilla, reyUbicacion, color, tablero, false);
+                    if (amenaza) {
+                        System.out.println("Rey " + color +" amenazado");
+                        return false;   //significa que no esta a salvo
+                    }
+                }
+            }
+        }
+        System.out.println("Rey " + color +" a salvo");
+        return true;
+    }
+    
+    
     private boolean validarJaqueMate() {
         //TODO: Validar si el jugador contrario ha quedado en Jaque Mate
+        // loop de todas las fichas aliadas si ninguna puede mover entonces es jaque
         return false;
     }
 
