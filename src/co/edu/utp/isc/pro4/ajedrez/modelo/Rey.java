@@ -81,12 +81,25 @@ public class Rey extends Ficha {
         this.setCasilla(casillaFin);
         casillaFin.setFicha(this);
         
+        int fila = casillaFin.getFila();
+        char col = casillaFin.getColumna();
+        String nuevaPos = (col) + Integer.toString(fila);
+        int turno = (color == Color.BLANCO) ? 0 : 1;
+        juego.setPosReyes(turno, nuevaPos);
+        
         boolean movLegal = juego.reySeguro(color);
         if (!movLegal) {                    //revierte el mov si es ilegal
             this.setCasilla(null);
             casillaFin.setFicha(null);
             this.setCasilla(casillaInicio);
             casillaInicio.setFicha(this);
+            
+            fila = casillaInicio.getFila();
+            col = casillaInicio.getColumna();
+            nuevaPos = (col) + Integer.toString(fila);
+            turno = (color == Color.BLANCO) ? 0 : 1;
+            juego.setPosReyes(turno, nuevaPos);
+            
             return false;
         }
         this.primerMov = false;
