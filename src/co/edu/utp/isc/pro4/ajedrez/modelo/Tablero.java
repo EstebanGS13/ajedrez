@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.utp.isc.pro4.ajedrez.modelo;
 
-/**
- *
- * @author utp
- */
+
 public class Tablero {
 
     private final Casilla[][] casillas;
@@ -30,15 +23,9 @@ public class Tablero {
         return casillas[fila][columna];
     }
 
-    public Casilla getCasilla(int fila, char letra) {
-        fila -= 1;
-        int columna = letra - 'A';
-        return getCasilla(fila, columna);
-    }
     public Casilla getCasilla(String posicion) {
         int columna = posicion.charAt(0) - 'A';
         int fila = Integer.valueOf(posicion.substring(1)) - 1;
         return getCasilla(fila, columna);
     }
-
 }
