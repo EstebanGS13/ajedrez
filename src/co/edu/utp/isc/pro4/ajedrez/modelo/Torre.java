@@ -16,6 +16,10 @@ public class Torre extends Ficha {
         primerMov = true;
     }
 
+    public boolean isPrimerMov() {
+        return primerMov;
+    }
+
     @Override
     public boolean validarMovimiento(Ajedrez juego, 
             Casilla casillaInicio, Casilla casillaFin, 
