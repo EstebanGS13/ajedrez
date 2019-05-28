@@ -18,16 +18,23 @@ public class Rey extends Ficha {
     }
     
     @Override
-    public boolean validarMovimiento(
-            Ajedrez juego, Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero, boolean ejecutar) {
+    public boolean validarMovimiento(Ajedrez juego, 
+            Casilla casillaInicio, Casilla casillaFin, 
+            Color color, Tablero tablero, boolean ejecutar) {
         int colInicio = casillaInicio.getColumna() - 'A';
         int filaInicio = casillaInicio.getFila() - 1;
         
         int colFin = casillaFin.getColumna() - 'A';
         int filaFin = casillaFin.getFila() - 1;
         
-        int i = filaInicio;
-        int j = colInicio;
+        // Validacion si el movimiento es enroque
+        if ((colFin == colInicio+2) && (filaFin == filaInicio)
+                && primerMov) {
+            return this.enroqueCorto(juego, casillaInicio, casillaFin, color, tablero);
+        } else if ((colFin == colInicio-2) && (filaFin == filaInicio)
+                && primerMov) {
+            return this.enroqueLargo(juego, casillaInicio, casillaFin, color, tablero);
+        } 
         boolean encontrado = false;
         
         if (filaFin == filaInicio-1) {
@@ -52,9 +59,8 @@ public class Rey extends Ficha {
             } else if (colFin == colInicio+1) {
                 encontrado = true;
             }
-        } else {
-            //TODO: enroque?
         }
+
         if (encontrado) {
             if (!ejecutar) {
                 return true;
@@ -117,8 +123,54 @@ public class Rey extends Ficha {
         return true;
     }
 
-    public void enroque() {
-        //TODO: mov del enroque
+    public boolean enroqueCorto(Ajedrez juego, Casilla reyCasillaInicio, 
+            Casilla reyCasillaFin, Color colorRey, Tablero tablero) {
+        
+        if (juego.reySeguro(colorRey)) {
+            int i = reyCasillaInicio.getFila() - 1;
+            int j = reyCasillaInicio.getColumna() - 'A';
+            Casilla torreInicio = tablero.getCasilla(i, j+3);
+            Casilla torreFin = tablero.getCasilla(i, j+1);
+            
+            Ficha torreTomada = torreInicio.getFicha();
+            
+            if ((torreTomada instanceof Torre) && (torreTomada.getColor() == colorRey)){
+                if (((Torre) torreTomada).isPrimerMov()) {                                               // si la torre no se ha movido por primera vez
+                    if (((Torre) torreTomada).validarMovimiento(
+                            juego, torreInicio, torreFin, colorRey, tablero, false)) {                   // si la torre se puede mover al lugar de enroque
+                        if (this.mover(juego, reyCasillaInicio, reyCasillaFin, colorRey)) {              // si puede mover el rey al lugar de enroque, lo hace
+                            return ((Torre) torreTomada).mover(juego, torreInicio, torreFin, colorRey);  // si se movio el rey, mueve la torre
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean enroqueLargo(Ajedrez juego, Casilla reyCasillaInicio, 
+            Casilla reyCasillaFin, Color colorRey, Tablero tablero) {
+        
+        if (juego.reySeguro(colorRey)) {
+            int i = reyCasillaInicio.getFila() - 1;
+            int j = reyCasillaInicio.getColumna() - 'A';
+            Casilla torreInicio = tablero.getCasilla(i, j-4);
+            Casilla torreFin = tablero.getCasilla(i, j-1);
+            
+            Ficha torreTomada = torreInicio.getFicha();
+            
+            if ((torreTomada instanceof Torre) && (torreTomada.getColor() == colorRey)){
+                if (((Torre) torreTomada).isPrimerMov()) {
+                    if (((Torre) torreTomada).validarMovimiento(
+                            juego, torreInicio, torreFin, colorRey, tablero, false)) {
+                        if (this.mover(juego, reyCasillaInicio, reyCasillaFin, colorRey)) {
+                            return ((Torre) torreTomada).mover(juego, torreInicio, torreFin, colorRey);
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
     
     @Override
