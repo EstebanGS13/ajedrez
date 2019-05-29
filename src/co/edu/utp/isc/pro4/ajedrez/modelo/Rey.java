@@ -30,10 +30,12 @@ public class Rey extends Ficha {
         // Validacion si el movimiento es enroque
         if ((colFin == colInicio+2) && (filaFin == filaInicio)
                 && primerMov) {
-            return this.enroqueCorto(juego, casillaInicio, casillaFin, color, tablero);
+            return this.enroqueCorto(juego, casillaInicio, 
+                    casillaFin, color, tablero);
         } else if ((colFin == colInicio-2) && (filaFin == filaInicio)
                 && primerMov) {
-            return this.enroqueLargo(juego, casillaInicio, casillaFin, color, tablero);
+            return this.enroqueLargo(juego, casillaInicio, 
+                    casillaFin, color, tablero);
         } 
         boolean encontrado = false;
         
@@ -152,7 +154,8 @@ public class Rey extends Ficha {
                     if (((Torre) torreTomada).validarMovimiento(
                             juego, torreInicio, torreFin, colorRey, tablero, false)) {                   // si la torre se puede mover al lugar de enroque
                         if (this.mover(juego, reyCasillaInicio, reyCasillaFin, colorRey)) {              // si puede mover el rey al lugar de enroque, lo hace
-                            return ((Torre) torreTomada).mover(juego, torreInicio, torreFin, colorRey);  // si se movio el rey, mueve la torre
+                            return ((Torre) torreTomada).mover(
+                                    juego, torreInicio, torreFin, colorRey);  // si se movio el rey, mueve la torre
                         }
                     }
                 }
@@ -177,7 +180,8 @@ public class Rey extends Ficha {
                     if (((Torre) torreTomada).validarMovimiento(
                             juego, torreInicio, torreFin, colorRey, tablero, false)) {
                         if (this.mover(juego, reyCasillaInicio, reyCasillaFin, colorRey)) {
-                            return ((Torre) torreTomada).mover(juego, torreInicio, torreFin, colorRey);
+                            return ((Torre) torreTomada).mover(
+                                    juego, torreInicio, torreFin, colorRey);
                         }
                     }
                 }

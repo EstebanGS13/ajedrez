@@ -23,7 +23,6 @@ public class Jugador {
                     return false;
                 }
             }
-            System.out.println("va a mover");
             boolean movido = ficha.validarMovimiento(juego,
                     casillaInicio, casillaFin, 
                     this.color, tablero, true);
@@ -31,7 +30,7 @@ public class Jugador {
                 return true;
             }
         }
-        System.out.println("jugador no jugo");
+//        System.out.println("jugador no jugo");
         return false;     
     }
 
@@ -45,10 +44,5 @@ public class Jugador {
 
     public Color getColor() {
         return color;
-    }
-
-    private void rendirse() {
-        // No me gusta pero los estudiantes lo pidieron
-        ajedrez.rendirse();
     }
 }

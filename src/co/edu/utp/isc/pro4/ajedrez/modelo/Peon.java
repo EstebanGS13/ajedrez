@@ -18,8 +18,9 @@ public class Peon extends Ficha {
     }
 
     @Override
-    public boolean validarMovimiento(
-            Ajedrez juego, Casilla casillaInicio, Casilla casillaFin, Color color, Tablero tablero, boolean ejecutar) {
+    public boolean validarMovimiento(Ajedrez juego, 
+            Casilla casillaInicio, Casilla casillaFin, 
+            Color color, Tablero tablero, boolean ejecutar) {
         int colInicio = casillaInicio.getColumna() - 'A';
         int filaInicio = casillaInicio.getFila() - 1;
         
@@ -79,7 +80,8 @@ public class Peon extends Ficha {
     }
 
     @Override
-    public boolean mover(Ajedrez juego, Casilla casillaInicio, Casilla casillaFin, Color color) {
+    public boolean mover(Ajedrez juego, Casilla casillaInicio, 
+            Casilla casillaFin, Color color) {
         this.setCasilla(null);
         casillaInicio.setFicha(null);
         this.setCasilla(casillaFin);

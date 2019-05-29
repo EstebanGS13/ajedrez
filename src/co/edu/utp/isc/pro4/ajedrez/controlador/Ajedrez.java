@@ -18,17 +18,13 @@ import co.edu.utp.isc.pro4.ajedrez.ui.PnlTablero;
 
 public class Ajedrez {
 
-    /*Temporal*/
     private PnlTablero pnlTablero;
     private Jugador[] jugadores;
     private Tablero tablero;
     private Cronometro cronometro;
     private String[] posReyes;
     
-    private int turno;
-    private boolean jugadorEnJaque;
-    private boolean terminado;
-    
+    private int turno;    
 
     public Ajedrez() {
         jugadores = new Jugador[2];
@@ -36,8 +32,6 @@ public class Ajedrez {
         cronometro = new Cronometro();
         posReyes = new String[2];
         turno = 0;
-        jugadorEnJaque = false;
-        terminado = false;
     }
 
     public Ajedrez(Jugador jugador1, Jugador jugador2) {
@@ -68,33 +62,6 @@ public class Ajedrez {
         
         cronometro.iniciar();
         mostrarTablero();
-        /*
-        do {
-            jugadores[turno].jugar();
-            // Validar si hay Jaque Mate y terminar
-            if (terminado) {
-                turno = (turno == 0 ? 1 : 0);
-                break;
-            } else if (validarJaqueMate()) {
-                terminado = true;
-                break;
-            } else if (validarTablas()) {
-                break;
-            }
-            // Sino, cambiar turno
-            cambioTurno();
-
-        } while (!terminado);
-        cronometro.parar();
-
-        //TODO: Cambiarlo de lugar
-        if (terminado) {
-            System.out.println("El Jugador "
-                    + jugadores[turno].getNombre() + " ha ganado");
-        } else {
-            System.out.println("Los jugadores han quedado en tablas");
-        }
-         */
     }
 
     public int validarPosiciones(Posicion posClicks) {
@@ -212,10 +179,6 @@ public class Ajedrez {
     private boolean validarTablas() {
         //TODO: Validar si los jugadores se han quedado sin posibilidad de ganar
         return false;
-    }
-
-    public void rendirse() {
-        terminado = true;
     }
 
     private void ubicarFichasTablero() {

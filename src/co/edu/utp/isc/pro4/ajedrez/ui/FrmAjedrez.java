@@ -316,7 +316,6 @@ public class FrmAjedrez extends javax.swing.JFrame {
                     && !posClicks.getPosicionDos().isEmpty()
                     && !posClicks.getPosicionUno().equals(
                             posClicks.getPosicionDos())) {
-                System.out.println("envia poss");
                 int turnoNum = juego.validarPosiciones(posClicks);          //toma turno del siguiente jugador
                 String turnoMsj = (turnoNum == 0) ? "Blancas" : "Negras";   //txtBlancas.getName() : txtNegras.getName();
                 lblJugador.setText(turnoMsj);
@@ -328,7 +327,6 @@ public class FrmAjedrez extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_pnlTableroMouseReleased
-    
 
     private void pnlTableroMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTableroMouseMoved
         // TODO add your handling code here:
