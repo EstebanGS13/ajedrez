@@ -157,9 +157,10 @@ public class Ajedrez {
     }
     
     private boolean reySalvable(Color colorRey) {
+        Tablero copiaTablero = new Tablero();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Casilla casillaTomada = tablero.getCasilla(i, j);
+                Casilla casillaTomada = copiaTablero.getCasilla(i, j);
                 Ficha fichaTomada = casillaTomada.getFicha();
                 if (casillaTomada.isOcupada()) {
                     if (fichaTomada.getColor() != colorRey) {
@@ -167,7 +168,7 @@ public class Ajedrez {
                     }
                     for (int k = 0; k < 8; k++) {
                         for (int l = 0; l < 8; l++) {
-                            Casilla casillaFin = tablero.getCasilla(k, l);
+                            Casilla casillaFin = copiaTablero.getCasilla(k, l);
                             if (casillaTomada != casillaFin) {
                                 if (casillaFin.isOcupada() 
                                         && (casillaFin.getFicha().getColor() 
@@ -176,7 +177,7 @@ public class Ajedrez {
                                 }
                                 boolean puedeMover = fichaTomada.validarMovimiento(
                                         this, casillaTomada, casillaFin, 
-                                        colorRey, tablero, true);
+                                        colorRey, copiaTablero, true);
                                 if (puedeMover) {
                                     return true;
                                 }

@@ -19,6 +19,10 @@ public class Tablero {
         }
     }
 
+    public Tablero(Tablero otro) {
+        this.casillas = otro.casillas;
+    }
+
     public Casilla getCasilla(int fila, int columna) {
         return casillas[fila][columna];
     }
